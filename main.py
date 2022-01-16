@@ -46,7 +46,9 @@ def unbound_array_recommend(stats):
 def unbound_array_transform(array):
     array.sort(reverse=True)
     peak = array[0]
-    new_array = map(lambda x: x - peak, array)
+    new_array = []
+    for i in array:
+        new_array.append(i - peak)
     return new_array
 
 
@@ -118,9 +120,9 @@ def bound_array_transform(array):
         check_threshold = array[i]
         pass_count = 0
         for n in range(6):
-            if check_threshold >= n:
+            if check_threshold >= array[n]:
                 pass_count += 1
-        trans_array[i] = 7 - pass_count
+        trans_array.append(7 - pass_count)
     return trans_array
 
 
@@ -133,7 +135,7 @@ def check_bound(bound_stats, check_list):
 # To recommend a class, the needed class attributes
 def eval_bound(bound_stats, eval_list):
     for i in range(6):
-        if bound_stats[i] < eval_list[i]:
+        if bound_stats[i] > eval_list[i]:
             return False
     return True
 
@@ -142,9 +144,9 @@ def main():
     while True:
         array_type = input("Type U(u) for unbound stat array, B(b) for bound stat array, Q(q) to quit").upper()
         if array_type == "U":
-            unbound_array_function
+            unbound_array_function()
         elif array_type == "B":
-            bound_array_function
+            bound_array_function()
         elif array_type == "Q":
             quit()
         else:
@@ -153,12 +155,12 @@ def main():
 
 def unbound_array_function():
     input_array = take_array(False)
-    unbound_array_transform(input_array)
+    unbound_array_recommend(input_array)
 
 
 def bound_array_function():
     input_array = take_array(True)
-    bound_array_transform(input_array)
+    bound_array_recommend(input_array)
 
 
 def take_array(bound):
@@ -168,17 +170,21 @@ def take_array(bound):
         else:
             raw_input = input("Type in your rolls in the format: Roll1 Roll2 Roll3 Roll4 Roll5 Roll6 ")
         split_input = raw_input.split(" ")
-        if (split_input.len() == 6) and (all_int(split_input)):
-            return split_input
-        else:
+        try:
+            processed_input = process_split_input(split_input)
+            return processed_input
+        except:
             print("Incorrect input, please use correct formatting")
 
 
-def all_int(array):
-    for i in array:
-        if not (isinstance(i, int)):
-            return False
-    return True
+def process_split_input(split_input):
+    if len(split_input) != 6:
+        raise ValueError
+    output = []
+    for i in split_input:
+        output.append(int(i))
+    return output
+
 
 
 
