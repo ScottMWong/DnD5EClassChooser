@@ -142,7 +142,7 @@ def eval_bound(bound_stats, eval_list):
 
 def main():
     while True:
-        array_type = input("Type U(u) for unbound stat array, B(b) for bound stat array, Q(q) to quit").upper()
+        array_type = input("Type U(u) for unbound stat array, B(b) for bound stat array, Q(q) to quit ").upper()
         if array_type == "U":
             unbound_array_function()
         elif array_type == "B":
@@ -186,7 +186,6 @@ def process_split_input(split_input):
     return output
 
 
-
-
 if __name__ == "__main__":
     main()
+
