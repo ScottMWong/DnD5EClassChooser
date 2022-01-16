@@ -136,3 +136,51 @@ def eval_bound(bound_stats, eval_list):
         if bound_stats[i] < eval_list[i]:
             return False
     return True
+
+
+def main():
+    while True:
+        array_type = input("Type U(u) for unbound stat array, B(b) for bound stat array, Q(q) to quit").upper()
+        if array_type == "U":
+            unbound_array_function
+        elif array_type == "B":
+            bound_array_function
+        elif array_type == "Q":
+            quit()
+        else:
+            print("Invalid input, please try again")
+
+
+def unbound_array_function():
+    input_array = take_array(False)
+    unbound_array_transform(input_array)
+
+
+def bound_array_function():
+    input_array = take_array(True)
+    bound_array_transform(input_array)
+
+
+def take_array(bound):
+    while True:
+        if bound:
+            raw_input = input("Type in your rolls in the format: STR DEX CON INT WIS CHA ")
+        else:
+            raw_input = input("Type in your rolls in the format: Roll1 Roll2 Roll3 Roll4 Roll5 Roll6 ")
+        split_input = raw_input.split(" ")
+        if (split_input.len() == 6) and (all_int(split_input)):
+            return split_input
+        else:
+            print("Incorrect input, please use correct formatting")
+
+
+def all_int(array):
+    for i in array:
+        if not (isinstance(i, int)):
+            return False
+    return True
+
+
+
+if __name__ == "__main__":
+    main()
